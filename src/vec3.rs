@@ -1,4 +1,4 @@
-use std::ops::{Add, Mul, Div, Neg};
+use std::ops::{Add, Mul, Div, Neg, Sub};
 
 pub struct Vec3 {
     v: [f32; 3],
@@ -30,6 +30,20 @@ impl Add<f32> for Vec3 {
                 self.v[0] + s,
                 self.v[1] + s,
                 self.v[2] + s,
+            ]
+        }
+    }
+}
+
+impl Add for Vec3 {
+    type Output = Vec3;
+
+    fn add(self, other: Vec3) -> Vec3 {
+        Vec3 {
+            v: [
+                self.v[0] + other.v[0],
+                self.v[1] + other.v[1],
+                self.v[2] + other.v[2],
             ]
         }
     }
@@ -76,3 +90,18 @@ impl Neg for Vec3 {
         }
     }
 }
+
+impl Sub for Vec3 {
+    type Output = Vec3;
+
+    fn sub(self, other: Vec3) -> Vec3 {
+        Vec3 {
+            v: [
+                self.v[0] - other.v[0],
+                self.v[1] - other.v[1],
+                self.v[2] - other.v[2],
+            ],
+        }
+    }
+}
+type Point3 = Vec3;
