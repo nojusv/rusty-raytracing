@@ -12,12 +12,12 @@ fn main() -> io::Result<()> {
 
     writeln!(file, "P3\n{} {}\n255\n", image_width, image_height);
 
-    // for j in 0..image_height {
-    //     for i in 0..image_width {
-    //         let pixel_color = Color::from(i as f32 /((image_width - 1) as f32), j as f32 / ((image_height - 1) as f32), 0.0);
-    //         write_color(&mut file, &pixel_color);
-    //     }
-    // }
+    for j in 0..image_height {
+        for i in 0..image_width {
+            let pixel_color = Color::from(i as f32 /((image_width - 1) as f32), j as f32 / ((image_height - 1) as f32), 0.0);
+            write_color(&mut file, &pixel_color);
+        }
+    }
 
     Ok(())
 }
