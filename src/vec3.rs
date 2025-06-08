@@ -1,5 +1,6 @@
 use std::ops::{Add, Mul, MulAssign, Div, DivAssign, Neg, Sub};
 
+#[derive(Copy, Clone)]
 pub struct Vec3 {
     v: [f32; 3],
 }
@@ -82,6 +83,20 @@ impl Mul<f32> for Vec3 {
     }
 }
 
+impl Mul<Vec3> for f32 {
+    type Output = Vec3;
+
+    fn mul(self, vec: Vec3) -> Vec3 {
+        Vec3 {
+            v: [
+                vec.v[0] * self,
+                vec.v[1] * self,
+                vec.v[2] * self,
+            ]
+        }
+    }
+}
+
 // vec3 = vec3 / n
 impl Div<f32> for Vec3 {
     type Output = Vec3;
@@ -156,8 +171,8 @@ fn cross(u: &Vec3, v: &Vec3) -> Vec3 {
     )
 }
 
-fn unit_vector(v: &Vec3) -> Vec3 {
+pub fn unit_vector(v: &Vec3) -> Vec3 {
     v / v.length()
 }
 
-type Point3 = Vec3;
+pub type Point3 = Vec3;
