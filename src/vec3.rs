@@ -157,13 +157,28 @@ impl Sub for Vec3 {
     }
 }
 
-fn dot(u: &Vec3, v: &Vec3) -> f32 {
+// vec3 = &Vec3 - &Vec3
+impl<'a, 'b> Sub<&'b Vec3> for &'a Vec3 {
+    type Output = Vec3;
+
+    fn sub(self, other: &'b Vec3) -> Vec3 {
+        Vec3 {
+            v: [
+                self.v[0] - other.v[0],
+                self.v[1] - other.v[1],
+                self.v[2] - other.v[2],
+            ],
+        }
+    }
+}
+
+pub fn dot(u: &Vec3, v: &Vec3) -> f32 {
     u.v[0] * v.v[0]
         + u.v[1] * v.v[1]
         + u.v[2] * v.v[2]
 }
 
-fn cross(u: &Vec3, v: &Vec3) -> Vec3 {
+pub fn cross(u: &Vec3, v: &Vec3) -> Vec3 {
     Vec3::from(
         u.v[1] * v.v[2] - u.v[2] * v.v[1],
         u.v[2] * v.v[0] - u.v[0] * v.v[2],

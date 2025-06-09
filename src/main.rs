@@ -5,12 +5,26 @@ use std::fs::File;
 use std::io::{self, Write};
 use crate::color::{Color, write_color};
 use crate::ray::Ray;
-use crate::vec3::{Vec3, Point3, unit_vector};
+use crate::vec3::{Vec3, Point3, unit_vector, dot};
 
 fn ray_color(r: &Ray) -> Color {
-    let unit_direction = unit_vector(r.direction());
-    let a = 0.5 * (unit_direction.y() + 1.0);
-    (1.0 - a) * Color::from(1.0, 1.0, 1.0) + a * Color::from(0.5, 0.7, 1.0)
+    if hit_sphere(&Point3::from(0.0, 0.0, -1.0), 0.5, r) {
+        Color::from(1.0, 0.0, 0.0)
+    }
+    else {
+        let unit_direction = unit_vector(r.direction());
+        let a = 0.5 * (unit_direction.y() + 1.0);
+        (1.0 - a) * Color::from(1.0, 1.0, 1.0) + a * Color::from(0.5, 0.7, 1.0)
+    }
+}
+
+fn hit_sphere(center: &Point3, radius: f32, r: &Ray) -> bool {
+    let oc = center - r.origin();
+    let a = dot(r.direction(), r.direction());
+    let b = -2.0 * dot(r.direction(), &oc);
+    let c = dot(&oc, &oc) - radius * radius;
+    let discriminant = b * b - 4 as f32 * a * c;
+    discriminant >= 0 as f32
 }
 
 fn main() -> io::Result<()> {

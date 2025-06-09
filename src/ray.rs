@@ -12,6 +12,9 @@ impl Ray {
             dir,
         }
     }
+    pub fn origin(&self) -> &Point3 {
+        &self.orig
+    }
     pub fn direction(&self) -> &Vec3 {
         &self.dir
     }
